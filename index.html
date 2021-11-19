@@ -1,108 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab 9</title>
+    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+    <script>
+      // Step 5: install TrackJS
+      window.TrackJS &&
+        TrackJS.install({
+          token: "ae355baa91bb4f238644d7ff9b559ce0",
+          // for more configuration options, see https://docs.trackjs.com
+        });
+      TrackJS.track("Testing TrackJS!");
+    </script>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lab 9</title>
+    <style>
+      button {
+        margin: 3px;
+      }
 
-  <style>
-    button {
-      margin: 3px;
-    }
+      button:hover {
+        cursor: pointer;
+      }
 
-    button:hover {
-      cursor: pointer;
-    }
+      #first-num,
+      #second-num {
+        width: 60px;
+      }
 
-    #first-num,
-    #second-num {
-      width: 60px;
-    }
+      output {
+        border: 1px solid gray;
+        display: block;
+        height: 18px;
+        margin-top: 5px;
+        padding: 5px;
+        width: 240px;
+      }
 
-    output {
-      border: 1px solid gray;
-      display: block;
-      height: 18px;
-      margin-top: 5px;
-      padding: 5px;
-      width: 240px;
-    }
+      main {
+        width: 800px;
+      }
 
-    main {
-      width: 800px;
-    }
+      #error-btns {
+        column-gap: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 30px;
+        row-gap: 5px;
+      }
 
-    #error-btns {
-      column-gap: 5px;
-      display: flex;
-      flex-wrap: wrap;
-      margin-top: 30px;
-      row-gap: 5px;
-    }
+      #error-btns > * {
+        padding: 8px 2px;
+        width: 122px;
+      }
+    </style>
+  </head>
 
-    #error-btns>* {
-      padding: 8px 2px;
-      width: 122px;
-    }
-  </style>
-</head>
+  <body>
+    <main>
+      <form>
+        <fieldset>
+          <legend>Error Calculator</legend>
+          <input name="first-num" id="first-num" />
+          <select name="operator" id="operator">
+            <option>+</option>
+            <option>-</option>
+            <option>*</option>
+            <option>/</option>
+          </select>
+          <input name="second-num" id="second-num" />
+          <button id="calculate">Calculate</button>
+          <br />
+          <output></output>
+        </fieldset>
+      </form>
 
-<body>
-  <main>
-    <form>
-      <fieldset>
-        <legend>Error Calculator</legend>
-        <input name="first-num" id="first-num" />
-        <select name="operator" id="operator">
-          <option>+</option>
-          <option>-</option>
-          <option>*</option>
-          <option>/</option>
-        </select>
-        <input name="second-num" id="second-num" />
-        <button id="calculate">Calculate</button>
-        <br />
-        <output></output>
-      </fieldset>
-    </form>
+      <section id="error-btns">
+        <button>Console Log</button>
+        <button>Console Error</button>
+        <button>Console Count</button>
+        <button>Console Warn</button>
+        <button>Console Assert</button>
+        <button>Console Clear</button>
+        <button>Console Dir</button>
+        <button>Console dirxml</button>
+        <button>Console Group Start</button>
+        <button>Console Group End</button>
+        <button>Console Table</button>
+        <button>Start Timer</button>
+        <button>End Timer</button>
+        <button>Console Trace</button>
+        <button>Trigger a Global Error</button>
+      </section>
+    </main>
 
-    <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
-      <button>Console Warn</button>
-      <button>Console Assert</button>
-      <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
-      <button>Console Group Start</button>
-      <button>Console Group End</button>
-      <button>Console Table</button>
-      <button>Start Timer</button>
-      <button>End Timer</button>
-      <button>Console Trace</button>
-      <button>Trigger a Global Error</button>
-    </section>
-  </main>
+    <script>
+      // let form = document.querySelector("form"); // Comment this line out to simulate an error
+      try {
+        form.addEventListener("submit", (e) => {
+          //Step 3: Some error here
+        });
+      } catch (err) {
+        console.log("Step 3: error handled by catch");
+        let form = document.querySelector("form");
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          let output = document.querySelector("output");
+          let firstNum = document.querySelector("#first-num").value;
+          let secondNum = document.querySelector("#second-num").value;
+          let operator = document.querySelector("#operator").value;
+          output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+        });
+      }
+      //Step 4: Throw something
+      try {
+        let err_message = "Step 4";
+        throw err_message;
+      } catch (err) {
+        console.error(err);
+      }
+      let errorBtns = Array.from(
+        document.querySelectorAll("#error-btns > button")
+      );
+      //Step 5: Some random bad code to Triger TrackJs
+      //let a = bad_code();
 
-  <script>
-    let form = document.querySelector('form');
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      let output = document.querySelector('output');
-      let firstNum = document.querySelector('#first-num').value;
-      let secondNum = document.querySelector('#second-num').value;
-      let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
-    });
+      // Start your code here
+      // You may move this JS to another file if you wish
+      // Step 2
+      // Console log
+      errorBtns[0].onclick = function () {
+        console.log("Console Log Demo");
+      };
 
-    let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
+      // Console Error
+      errorBtns[1].onclick = function () {
+        console.error("Console Error Demo");
+      };
 
-    // Start your code here
-    // You may move this JS to another file if you wish
-  </script>
-</body>
+      // Console Count
+      errorBtns[2].onclick = function () {
+        console.count("Count Button");
+      };
 
+      // Console Warn
+      errorBtns[3].onclick = function () {
+        console.warn("Console Warn Button");
+      };
+
+      // Console Assert
+      errorBtns[4].onclick = function () {
+        const x = 5;
+        const y = 3;
+        const reason = "x is not equal to y";
+        console.assert(x == y, { x, y, reason });
+      };
+
+      // Console Clear
+      errorBtns[5].onclick = function () {
+        console.clear();
+      };
+
+      // Console Dir
+      errorBtns[6].onclick = function () {
+        console.dir(errorBtns[6]);
+      };
+
+      // Console dirxml
+      errorBtns[7].onclick = function () {
+        console.dirxml(errorBtns[7]);
+      };
+
+      // Console Group Start
+      errorBtns[8].onclick = function () {
+        console.group("Console.group");
+      };
+
+      // Console Group End
+      errorBtns[9].onclick = function () {
+        console.groupEnd("Console.group");
+      };
+
+      // Console Group Table
+      errorBtns[10].onclick = function () {
+        console.table([
+          {
+            name: "Software Engineering",
+            num: "110",
+          },
+          {
+            name: "Programming Languages: Principles and Paradigms",
+            num: "130",
+          },
+          {
+            name: "Advanced Software Engineering",
+            num: "112",
+          },
+        ]);
+      };
+
+      // Start Timer
+      errorBtns[11].onclick = function () {
+        console.time();
+      };
+
+      // End Timer
+      errorBtns[12].onclick = function () {
+        console.timeEnd();
+      };
+
+      // Console Trace
+      errorBtns[13].onclick = function () {
+        const deep = () => {
+          deeper();
+        };
+        const deeper = () => {
+          deepest();
+        };
+        const deepest = () => {
+          console.trace();
+        };
+        deep();
+      };
+
+      // Trigger a Global Error
+      errorBtns[14].onclick = function () {
+        fetch(undefined_path);
+      };
+      window.onerror = () => {
+        console.log("Sadly an error happened my friend");
+      };
+    </script>
+  </body>
 </html>
